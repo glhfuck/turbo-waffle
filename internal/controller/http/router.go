@@ -1,11 +1,15 @@
 package httpControl
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
 
-func NewRouter(e *gin.Engine, c Controller) {
+	"github.com/gin-gonic/gin"
+)
 
+func NewRouter(c *Controller) http.Handler {
+	engine := gin.New()
 
-	api := e.Group("/")
+	api := engine.Group("/")
 	{
 		api.GET(":id", c.redirect)
 
@@ -23,4 +27,6 @@ func NewRouter(e *gin.Engine, c Controller) {
 			auth.POST("/sign-in", c.signIn)
 		}
 	}
+
+	return engine
 }

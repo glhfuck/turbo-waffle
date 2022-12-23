@@ -2,10 +2,10 @@ package httpControl
 
 import "github.com/gin-gonic/gin"
 
-func (c *controller) allStat(ctx *gin.Context) {
+func (c *Controller) allStat(ctx *gin.Context) {
 
 }
 
-func (c *controller) oneStat(ctx *gin.Context) {
+func (c *Controller) oneStat(ctx *gin.Context) {
 
 }

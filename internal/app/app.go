@@ -10,12 +10,25 @@ import (
 )
 
 func Run() {
-	repository := repository.NewRepository()
+	db, err := repository.NewPostgresDB(repository.Config{
+		Host:     "localhost",
+		Port:     "9999",
+		Username: "postgres",
+		Password: "qwerty",
+		DBName:   "postgres",
+		SSLMode:  "disable",
+	})
+
+	if err != nil {
+		log.Fatalf("Can not initialize db: %s", err.Error())
+	}
+
+	repository := repository.NewRepository(db)
 	usecase := usecase.NewUsecase(repository)
 	controller := httpControl.NewController(usecase)
 
 	httpServer := new(httpserver.Server)
-	err := httpServer.Run(httpControl.NewRouter(controller))
+	err = httpServer.Run("8080", httpControl.NewRouter(controller))
 	if err != nil {
 		log.Fatalf("Can not run http server: %s", err.Error())
 	}

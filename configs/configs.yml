@@ -1,1 +1,11 @@
 port: "8080"
+
+db:
+    host:     "localhost"
+		port:     "9999"
+		username: "postgres"
+		password: "qwerty"
+		dbname:   "postgres"
+		sslmode:  "disable"
+
+//migrate -path ./schema -database 'postgres://postgres:qwerty@localhost:9999/postgres?sslmode=disable' up

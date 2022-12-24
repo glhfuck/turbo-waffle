@@ -1,18 +1,20 @@
 package app
 
 import (
+	"github.com/sirupsen/logrus"
+
 	httpControl "github.com/glhfuck/turbo-waffle/internal/controller/http"
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository"
+	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/postgres_repo"
 	"github.com/glhfuck/turbo-waffle/internal/usecase"
 	"github.com/glhfuck/turbo-waffle/pkg/httpserver"
-	"github.com/sirupsen/logrus"
 )
 
 func Run(cfg Config) {
-	db, err := repository.NewPostgresDB(cfg.PostgresConfig)
+	db, err := postgres_repo.NewPostgresDB(cfg.PostgresConfig)
 
 	if err != nil {
-		logrus.Fatalf("Can not initialize db: %s", err.Error())
+		logrus.Fatalf("Can't initialize db: %s", err.Error())
 	}
 
 	repository := repository.NewRepository(db)
@@ -22,6 +24,6 @@ func Run(cfg Config) {
 	httpServer := new(httpserver.Server)
 	err = httpServer.Run(cfg.HttpConfig, httpControl.NewRouter(controller))
 	if err != nil {
-		logrus.Fatalf("Can not run http server: %s", err.Error())
+		logrus.Fatalf("Can't run http server: %s", err.Error())
 	}
 }

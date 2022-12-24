@@ -9,7 +9,13 @@ import (
 func NewRouter(c *Controller) http.Handler {
 	engine := gin.New()
 
-	api := engine.Group("/")
+	auth := engine.Group("/auth")
+	{
+		auth.POST("/sign-up", c.signUp)
+		auth.POST("/sign-in", c.signIn)
+	}
+
+	api := engine.Group("/", c.userIdentity)
 	{
 		api.GET(":id", c.redirect)
 
@@ -19,12 +25,6 @@ func NewRouter(c *Controller) http.Handler {
 		{
 			stat.GET("/all", c.allStat)
 			stat.GET("/:id", c.oneStat)
-		}
-
-		auth := api.Group("auth")
-		{
-			auth.POST("/sign-up", c.signUp)
-			auth.POST("/sign-in", c.signIn)
 		}
 	}
 

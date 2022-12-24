@@ -1,11 +1,11 @@
 package app
 
 import (
-	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository"
+	postgresrepo "github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/postgres_repo"
 	"github.com/glhfuck/turbo-waffle/pkg/httpserver"
 )
 
 type Config struct {
 	httpserver.HttpConfig
-	repository.PostgresConfig
+	postgresrepo.PostgresConfig
 }

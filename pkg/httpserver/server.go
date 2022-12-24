@@ -17,9 +17,13 @@ type Server struct {
 	httpServer *http.Server
 }
 
-func (s *Server) Run(port string, handler http.Handler) error {
+type HttpConfig struct {
+	Port string
+}
+
+func (s *Server) Run(cfg HttpConfig, handler http.Handler) error {
 	s.httpServer = &http.Server{
-		Addr:         ":" + port,
+		Addr:         ":" + cfg.Port,
 		Handler:      handler,
 		ReadTimeout:  _defaultReadTimeout,
 		WriteTimeout: _defaultWriteTimeout,

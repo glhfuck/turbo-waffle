@@ -9,15 +9,8 @@ import (
 	"github.com/glhfuck/turbo-waffle/pkg/httpserver"
 )
 
-func Run() {
-	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     "localhost",
-		Port:     "9999",
-		Username: "postgres",
-		Password: "qwerty",
-		DBName:   "postgres",
-		SSLMode:  "disable",
-	})
+func Run(cfg Config) {
+	db, err := repository.NewPostgresDB(cfg.PostgresConfig)
 
 	if err != nil {
 		log.Fatalf("Can not initialize db: %s", err.Error())
@@ -28,7 +21,7 @@ func Run() {
 	controller := httpControl.NewController(usecase)
 
 	httpServer := new(httpserver.Server)
-	err = httpServer.Run(port, httpControl.NewRouter(controller))
+	err = httpServer.Run(cfg.HttpConfig, httpControl.NewRouter(controller))
 	if err != nil {
 		log.Fatalf("Can not run http server: %s", err.Error())
 	}

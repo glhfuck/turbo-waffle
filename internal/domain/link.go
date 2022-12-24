@@ -3,7 +3,7 @@ package domain
 import "time"
 
 type Link struct {
-	Identifier   string
+	ShortPath    string
 	OriginalURL  string
 	CreationDate time.Time
 	UpdateDate   time.Time

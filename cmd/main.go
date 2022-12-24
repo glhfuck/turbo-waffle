@@ -1,7 +1,23 @@
 package main
 
-import "github.com/glhfuck/turbo-waffle/internal/app"
+import (
+	"log"
+
+	"github.com/glhfuck/turbo-waffle/internal/app"
+	"github.com/spf13/viper"
+)
 
 func main() {
-	app.Run()
+	err := InitConfig()
+	if err != nil {
+		log.Fatalf("Can't initialize config: %s", err.Error())
+	}
+
+	app.Run(viper.GetString("port"))
+}
+
+func InitConfig() error {
+	viper.AddConfigPath("configs")
+	viper.SetConfigName("config")
+	return viper.ReadInConfig()
 }

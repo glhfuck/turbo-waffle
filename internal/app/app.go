@@ -28,7 +28,7 @@ func Run() {
 	controller := httpControl.NewController(usecase)
 
 	httpServer := new(httpserver.Server)
-	err = httpServer.Run("8080", httpControl.NewRouter(controller))
+	err = httpServer.Run(port, httpControl.NewRouter(controller))
 	if err != nil {
 		log.Fatalf("Can not run http server: %s", err.Error())
 	}

@@ -5,9 +5,18 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/glhfuck/turbo-waffle/internal/domain"
+	"github.com/glhfuck/turbo-waffle/internal/usecase"
 )
 
-func (c *Controller) signUp(ctx *gin.Context) {
+type authControl struct {
+	usecases *usecase.Usecase
+}
+
+func newAuthControl(uc *usecase.Usecase) *authControl {
+	return &authControl{usecases: uc}
+}
+
+func (ac *authControl) signUp(ctx *gin.Context) {
 	var input domain.User
 
 	err := ctx.BindJSON(&input)
@@ -17,7 +26,7 @@ func (c *Controller) signUp(ctx *gin.Context) {
 		return
 	}
 
-	id, err := c.usecases.Authorization.CreateUser(input)
+	id, err := ac.usecases.Authorization.CreateUser(input)
 
 	if err != nil {
 		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -34,7 +43,7 @@ type signInInput struct {
 	Password string `json:"password" db:"password" binding:"required"`
 }
 
-func (c *Controller) signIn(ctx *gin.Context) {
+func (ac *authControl) signIn(ctx *gin.Context) {
 	var input signInInput
 
 	err := ctx.BindJSON(&input)
@@ -44,7 +53,7 @@ func (c *Controller) signIn(ctx *gin.Context) {
 		return
 	}
 
-	token, err := c.usecases.Authorization.GenerateToken(input.Username, input.Password)
+	token, err := ac.usecases.Authorization.GenerateToken(input.Username, input.Password)
 
 	if err != nil {
 		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())

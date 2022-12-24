@@ -18,6 +18,7 @@ type Authorization interface {
 }
 
 type Shortener interface {
+	SaveLink(link *domain.Link) (*domain.Link, error)
 }
 
 type Statistics interface {
@@ -26,5 +27,6 @@ type Statistics interface {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: postgres_repo.NewAuthPostgres(db),
+		Shortener:     postgres_repo.NewShortPostgres(db),
 	}
 }

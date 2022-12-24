@@ -18,7 +18,7 @@ func main() {
 		logrus.Fatalf("Can't initialize config: %s", err.Error())
 	}
 
-	err = godotenv.Load()
+	err = godotenv.Load(".env")
 	if err != nil {
 		logrus.Fatalf("Can't load env variables: %s", err.Error())
 	}

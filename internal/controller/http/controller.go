@@ -9,13 +9,12 @@ type Controller struct {
 	Authorization
 	Shortener
 	Statistics
-
-	usecases *usecase.Usecase
 }
 
 type Authorization interface {
 	signUp(ctx *gin.Context)
 	signIn(ctx *gin.Context)
+	userIdentity(ctx *gin.Context)
 }
 
 type Shortener interface {
@@ -29,5 +28,9 @@ type Statistics interface {
 }
 
 func NewController(uc *usecase.Usecase) *Controller {
-	return &Controller{usecases: uc}
+	return &Controller{
+		Authorization: newAuthControl(uc),
+		Shortener:     newShortControl(uc),
+		//Statistics:    newStatControl(uc),
+	}
 }

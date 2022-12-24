@@ -11,7 +11,7 @@ const (
 	authHeader = "Authorization"
 )
 
-func (c *Controller) userIdentity(ctx *gin.Context) {
+func (ac *authControl) userIdentity(ctx *gin.Context) {
 	header := ctx.GetHeader(authHeader)
 
 	if header == "" {
@@ -26,7 +26,7 @@ func (c *Controller) userIdentity(ctx *gin.Context) {
 		return
 	}
 
-	userId, err := c.usecases.ParseToken(headerParts[1])
+	userId, err := ac.usecases.ParseToken(headerParts[1])
 
 	if err != nil {
 		newErrorResponse(ctx, http.StatusUnauthorized, err.Error())

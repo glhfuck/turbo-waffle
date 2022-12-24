@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+
 	"github.com/glhfuck/turbo-waffle/internal/domain"
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository"
 )

@@ -18,6 +18,7 @@ type Authorization interface {
 }
 
 type Shortener interface {
+	ShortURL(originalURL string, userId int) (string, error)
 }
 
 type Statistics interface {
@@ -26,5 +27,6 @@ type Statistics interface {
 func NewUsecase(repo *repository.Repository) *Usecase {
 	return &Usecase{
 		Authorization: newAuthUsecase(repo.Authorization),
+		Shortener:     newShortUsecase(repo),
 	}
 }

@@ -1,7 +1,7 @@
 package pgrepository
 
 import (
-	"fmt"
+	"time"
 
 	"github.com/glhfuck/turbo-waffle/internal/domain"
 	"github.com/jmoiron/sqlx"
@@ -32,11 +32,11 @@ func (sp *shortPostgres) OriginalURL(linkId int) (string, error) {
 
 	updateQuery := `
 	UPDATE links
-	SET visits_count = visits_count + 1
-	WHERE link_id = $1
+	SET visits_count = visits_count + 1, update_date = $1
+	WHERE link_id = $2
 	`
 
-	_, err = tx.Exec(updateQuery, linkId)
+	_, err = tx.Exec(updateQuery, time.Now(), linkId)
 	if err != nil {
 		tx.Rollback()
 		return "", err
@@ -53,8 +53,6 @@ func (sp *shortPostgres) SaveLink(link *domain.Link) (*domain.Link, error) {
 	($1, $2, $3, $4, $5)
 	RETURNING link_id
 	`
-
-	fmt.Println(link.OwnerId)
 
 	row := sp.db.QueryRow(
 		query,

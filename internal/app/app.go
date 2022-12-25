@@ -9,11 +9,11 @@ import (
 
 	"github.com/sirupsen/logrus"
 
+	"github.com/glhfuck/turbo-waffle/internal/app/httpserver"
 	"github.com/glhfuck/turbo-waffle/internal/controller/httpcontroller"
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository"
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/pgrepository"
 	"github.com/glhfuck/turbo-waffle/internal/usecase"
-	"github.com/glhfuck/turbo-waffle/pkg/httpserver"
 )
 
 func Run(config *Config) {

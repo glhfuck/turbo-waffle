@@ -7,8 +7,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 
+	"github.com/glhfuck/turbo-waffle/internal/app/httpserver"
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/pgrepository"
-	"github.com/glhfuck/turbo-waffle/pkg/httpserver"
 )
 
 type Config struct {

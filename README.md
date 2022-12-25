@@ -11,34 +11,34 @@ If you, like me, are in the process of learning Go and do not know how to start 
 
 Here is my project's file structure tree to make it easier for you to understand.
 ```
-.
-├── app
-│   ├── app.go
-│   └── config.go
-├── controller
-│   └── httpcontroller
-│       ├── auth.go
-│       ├── controller.go
-│       ├── middleware.go
-│       ├── response.go
-│       ├── router.go
-│       ├── shortener.go
-│       └── statistics.go
-├── domain
-│   ├── link.go
-│   └── user.go
-├── infrastructure
-│   └── repository
-│       ├── pgrepository
-│       │   ├── auth.go
-│       │   ├── config.go
-│       │   ├── postgres.go
-│       │   ├── shortener.go
-│       │   └── statistics.go
-│       └── repository.go
-└── usecase
-    ├── auth.go
-    ├── shortener.go
-    ├── statistics.go
-    └── usecase.go
+internal
+	├── app
+	│   ├── app.go
+	│   └── config.go
+	├── controller
+	│   └── httpcontroller
+	│       ├── auth.go
+	│       ├── controller.go
+	│       ├── middleware.go
+	│       ├── response.go
+	│       ├── router.go
+	│       ├── shortener.go
+	│       └── statistics.go
+	├── domain
+	│   ├── link.go
+	│   └── user.go
+	├── infrastructure
+	│   └── repository
+	│       ├── pgrepository
+	│       │   ├── auth.go
+	│       │   ├── config.go
+	│       │   ├── postgres.go
+	│       │   ├── shortener.go
+	│       │   └── statistics.go
+	│       └── repository.go
+	└── usecase
+		├── auth.go
+		├── shortener.go
+		├── statistics.go
+		└── usecase.go
 ```

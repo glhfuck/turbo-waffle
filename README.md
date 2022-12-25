@@ -11,10 +11,13 @@ If you, like me, are in the process of learning Go and do not know how to start 
 
 Here is my project's file structure tree to make it easier for you to understand.
 ```
-.
+internal
 ├── app
 │   ├── app.go
-│   └── config.go
+│   ├── config.go
+│   └── httpserver
+│       ├── config.go
+│       └── server.go
 ├── controller
 │   └── httpcontroller
 │       ├── auth.go

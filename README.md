@@ -1,6 +1,6 @@
 # Turbo Waffle
 
-This project is a REST API application in the Golang language.
+This project is a REST API application for shortening links in Go.
 Written for educational purposes.
 
 The main idea was to learn how to write applications using the Pure Architecture approach in building the application structure, as well as to learn how to use the dependency injection technique. At the same time I wanted to learn how to work with the database running in Docker, and to set up the migration of that database.

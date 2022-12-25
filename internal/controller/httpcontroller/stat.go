@@ -1,4 +1,4 @@
-package httpControl
+package httpcontroller
 
 import "github.com/gin-gonic/gin"
 

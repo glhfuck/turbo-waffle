@@ -1,4 +1,4 @@
-package postgres_repo
+package pgrepository
 
 import (
 	"github.com/glhfuck/turbo-waffle/internal/domain"

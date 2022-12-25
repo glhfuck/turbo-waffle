@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/glhfuck/turbo-waffle/internal/app"
-	postgresrepo "github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/postgres_repo"
+	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/pgrepository"
 	"github.com/glhfuck/turbo-waffle/pkg/httpserver"
 )
 
@@ -27,7 +27,7 @@ func main() {
 		HttpConfig: httpserver.HttpConfig{
 			Port: viper.GetString("port"),
 		},
-		PostgresConfig: postgresrepo.PostgresConfig{
+		PostgresConfig: pgrepository.PostgresConfig{
 			Host:     viper.GetString("db.host"),
 			Port:     viper.GetString("db.port"),
 			Username: viper.GetString("db.username"),

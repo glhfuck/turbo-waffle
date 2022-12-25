@@ -1,4 +1,4 @@
-package httpControl
+package httpcontroller
 
 import (
 	"net/http"

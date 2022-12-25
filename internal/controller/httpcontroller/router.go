@@ -1,4 +1,4 @@
-package httpControl
+package httpcontroller
 
 import (
 	"net/http"
@@ -9,6 +9,8 @@ import (
 func NewRouter(c *Controller) http.Handler {
 	engine := gin.New()
 
+	engine.GET("/:route", c.redirect)
+
 	auth := engine.Group("/auth")
 	{
 		auth.POST("/sign-up", c.signUp)
@@ -17,9 +19,7 @@ func NewRouter(c *Controller) http.Handler {
 
 	api := engine.Group("/", c.userIdentity)
 	{
-		api.GET(":id", c.redirect)
-
-		api.POST("", c.short)
+		api.POST("short", c.short)
 
 		stat := api.Group("stat")
 		{

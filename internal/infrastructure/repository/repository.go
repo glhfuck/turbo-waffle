@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/glhfuck/turbo-waffle/internal/domain"
-	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/postgres_repo"
+	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/pgrepository"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -18,6 +18,7 @@ type Authorization interface {
 }
 
 type Shortener interface {
+	GetLink(linkId int) (*domain.Link, error)
 	SaveLink(link *domain.Link) (*domain.Link, error)
 }
 
@@ -26,7 +27,7 @@ type Statistics interface {
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
-		Authorization: postgres_repo.NewAuthPostgres(db),
-		Shortener:     postgres_repo.NewShortPostgres(db),
+		Authorization: pgrepository.NewAuthPostgres(db),
+		Shortener:     pgrepository.NewShortPostgres(db),
 	}
 }

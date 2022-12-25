@@ -10,7 +10,7 @@ CREATE TABLE links
 (
 	link_id SERIAL PRIMARY KEY,
 	owner_id int REFERENCES users(user_id) ON DELETE CASCADE NOT NULL,
-	original_URL text NOT NULL,
+	original_url text NOT NULL,
 	creation_date timestamp NOT NULL,
 	update_date timestamp NOT NULL,
 	visits_count int NOT NULL

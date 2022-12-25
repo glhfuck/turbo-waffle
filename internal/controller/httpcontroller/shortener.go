@@ -1,4 +1,4 @@
-package httpControl
+package httpcontroller
 
 import (
 	"net/http"
@@ -17,7 +17,16 @@ func newShortControl(uc *usecase.Usecase) *shortControl {
 }
 
 func (sc *shortControl) redirect(ctx *gin.Context) {
+	route := ctx.Param("route")
 
+	originalURL, err := sc.usecases.Shortener.ParseRoute(route)
+
+	if err != nil {
+		newErrorResponse(ctx, http.StatusNotFound, err.Error())
+		return
+	}
+
+	ctx.Redirect(http.StatusMovedPermanently, originalURL)
 }
 
 func (sc *shortControl) short(ctx *gin.Context) {

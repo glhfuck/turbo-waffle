@@ -18,6 +18,7 @@ type Authorization interface {
 }
 
 type Shortener interface {
+	ParseRoute(route string) (string, error)
 	ShortURL(originalURL string, userId int) (string, error)
 }
 

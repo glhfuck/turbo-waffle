@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS users_links;
-
 DROP TABLE IF EXISTS links;
 
 DROP TABLE IF EXISTS users;

@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"errors"
 	"strconv"
 	"time"
 
@@ -9,9 +10,7 @@ import (
 )
 
 const (
-// salt       = "jHFGYkV7TvruGlni7ynIr5"
-// signingKey = "JKv89Hfdf98ffSD"
-// tokenTTL   = 12 * time.Hour
+// consts
 )
 
 type shortUsecase struct {
@@ -20,6 +19,22 @@ type shortUsecase struct {
 
 func newShortUsecase(repo repository.Shortener) *shortUsecase {
 	return &shortUsecase{repo: repo}
+}
+
+func (su *shortUsecase) ParseRoute(route string) (string, error) {
+	linkId, err := strconv.ParseInt(route, 36, 32)
+
+	if err != nil {
+		return "", errors.New("can't parse route")
+	}
+
+	link, err := su.repo.GetLink(int(linkId))
+
+	if err != nil {
+		return "", errors.New("no such route")
+	}
+
+	return link.OriginalURL, nil
 }
 
 func (su *shortUsecase) ShortURL(originalURL string, userId int) (string, error) {

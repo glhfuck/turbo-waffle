@@ -3,15 +3,15 @@ package app
 import (
 	"github.com/sirupsen/logrus"
 
-	httpControl "github.com/glhfuck/turbo-waffle/internal/controller/http"
+	httpControl "github.com/glhfuck/turbo-waffle/internal/controller/httpcontroller"
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository"
-	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/postgres_repo"
+	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository/pgrepository"
 	"github.com/glhfuck/turbo-waffle/internal/usecase"
 	"github.com/glhfuck/turbo-waffle/pkg/httpserver"
 )
 
 func Run(cfg Config) {
-	db, err := postgres_repo.NewPostgresDB(cfg.PostgresConfig)
+	db, err := pgrepository.NewPostgresDB(cfg.PostgresConfig)
 
 	if err != nil {
 		logrus.Fatalf("Can't initialize db: %s", err.Error())

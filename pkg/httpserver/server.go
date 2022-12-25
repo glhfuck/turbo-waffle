@@ -7,10 +7,8 @@ import (
 )
 
 const (
-	_defaultReadTimeout     = 5 * time.Second
-	_defaultWriteTimeout    = 5 * time.Second
-	_defaultAddr            = ":8080"
-	_defaultShutdownTimeout = 3 * time.Second
+	defaultReadTimeout  = 5 * time.Second
+	defaultWriteTimeout = 5 * time.Second
 )
 
 type Server struct {
@@ -21,8 +19,8 @@ func (s *Server) Run(cfg HttpConfig, handler http.Handler) error {
 	s.httpServer = &http.Server{
 		Addr:         ":" + cfg.Port,
 		Handler:      handler,
-		ReadTimeout:  _defaultReadTimeout,
-		WriteTimeout: _defaultWriteTimeout,
+		ReadTimeout:  defaultReadTimeout,
+		WriteTimeout: defaultWriteTimeout,
 	}
 
 	return s.httpServer.ListenAndServe()

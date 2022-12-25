@@ -8,12 +8,14 @@ import (
 	"github.com/glhfuck/turbo-waffle/internal/usecase"
 )
 
-type authControl struct {
-	usecase usecase.Authorization
+type Authorization interface {
+	signUp(ctx *gin.Context)
+	signIn(ctx *gin.Context)
+	userIdentity(ctx *gin.Context)
 }
 
-func newAuthControl(uc usecase.Authorization) *authControl {
-	return &authControl{usecase: uc}
+type authControl struct {
+	usecase usecase.Authorization
 }
 
 func (ac *authControl) signUp(ctx *gin.Context) {
@@ -63,4 +65,8 @@ func (ac *authControl) signIn(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, map[string]interface{}{
 		"token": token,
 	})
+}
+
+func newAuthControl(uc usecase.Authorization) *authControl {
+	return &authControl{usecase: uc}
 }

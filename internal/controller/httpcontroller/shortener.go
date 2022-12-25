@@ -8,12 +8,13 @@ import (
 	"github.com/glhfuck/turbo-waffle/internal/usecase"
 )
 
-type shortControl struct {
-	usecase usecase.Shortener
+type Shortener interface {
+	redirect(ctx *gin.Context)
+	short(ctx *gin.Context)
 }
 
-func newShortControl(uc usecase.Shortener) *shortControl {
-	return &shortControl{usecase: uc}
+type shortControl struct {
+	usecase usecase.Shortener
 }
 
 func (sc *shortControl) redirect(ctx *gin.Context) {
@@ -52,6 +53,10 @@ func (sc *shortControl) short(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, map[string]interface{}{
-		"URL": ctx.Request.URL.Host + "/" + shortRoute,
+		"route": shortRoute,
 	})
+}
+
+func newShortControl(uc usecase.Shortener) *shortControl {
+	return &shortControl{usecase: uc}
 }

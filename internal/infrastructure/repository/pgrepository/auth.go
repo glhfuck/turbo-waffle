@@ -9,10 +9,6 @@ type authPostgres struct {
 	db *sqlx.DB
 }
 
-func NewAuthPostgres(db *sqlx.DB) *authPostgres {
-	return &authPostgres{db: db}
-}
-
 func (au *authPostgres) CreateUser(u domain.User) (int, error) {
 	var user_id int
 
@@ -43,4 +39,8 @@ func (au *authPostgres) GetUser(username, password string) (domain.User, error) 
 	err := au.db.Get(&u, query, username, password)
 
 	return u, err
+}
+
+func NewAuthPostgres(db *sqlx.DB) *authPostgres {
+	return &authPostgres{db: db}
 }

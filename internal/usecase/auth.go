@@ -18,6 +18,12 @@ const (
 	tokenTTL   = 12 * time.Hour
 )
 
+type Authorization interface {
+	CreateUser(u domain.User) (int, error)
+	GenerateToken(username, password string) (string, error)
+	ParseToken(token string) (int, error)
+}
+
 type tokenClaims struct {
 	jwt.StandardClaims
 	UserId int `json:"user_id"`
@@ -25,10 +31,6 @@ type tokenClaims struct {
 
 type authUsecase struct {
 	repo repository.Authorization
-}
-
-func newAuthUsecase(repo repository.Authorization) *authUsecase {
-	return &authUsecase{repo: repo}
 }
 
 func (au *authUsecase) CreateUser(u domain.User) (int, error) {
@@ -81,4 +83,8 @@ func (au *authUsecase) passwordHash(password string) string {
 	hash.Write([]byte(password))
 
 	return fmt.Sprintf("%x", hash.Sum([]byte(salt)))
+}
+
+func newAuthUsecase(repo repository.Authorization) *authUsecase {
+	return &authUsecase{repo: repo}
 }

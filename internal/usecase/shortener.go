@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -10,12 +9,13 @@ import (
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository"
 )
 
-type shortUsecase struct {
-	repo repository.Shortener
+type Shortener interface {
+	ParseRoute(route string) (string, error)
+	ShortURL(originalURL string, userId int) (string, error)
 }
 
-func newShortUsecase(repo repository.Shortener) *shortUsecase {
-	return &shortUsecase{repo: repo}
+type shortUsecase struct {
+	repo repository.Shortener
 }
 
 func (su *shortUsecase) ParseRoute(route string) (string, error) {
@@ -28,7 +28,6 @@ func (su *shortUsecase) ParseRoute(route string) (string, error) {
 	originalURL, err := su.repo.OriginalURL(int(linkId))
 
 	if err != nil {
-		fmt.Println(err)
 		return "", errors.New("no such route")
 	}
 
@@ -57,4 +56,8 @@ func (su *shortUsecase) ShortURL(originalURL string, userId int) (string, error)
 	str := strconv.FormatInt(int64(id), 36)
 
 	return str, nil
+}
+
+func newShortUsecase(repo repository.Shortener) *shortUsecase {
+	return &shortUsecase{repo: repo}
 }

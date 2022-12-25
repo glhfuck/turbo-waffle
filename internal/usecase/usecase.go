@@ -23,11 +23,14 @@ type Shortener interface {
 }
 
 type Statistics interface {
+	OneStat(userId int, route string) (*domain.Link, error)
+	AllStat(userId int) ([]domain.Link, error)
 }
 
 func NewUsecase(repo *repository.Repository) *Usecase {
 	return &Usecase{
 		Authorization: newAuthUsecase(repo.Authorization),
-		Shortener:     newShortUsecase(repo),
+		Shortener:     newShortUsecase(repo.Shortener),
+		Statistics:    newStatUsecase(repo.Statistics),
 	}
 }

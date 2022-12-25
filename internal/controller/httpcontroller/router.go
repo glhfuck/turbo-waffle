@@ -24,7 +24,7 @@ func NewRouter(c *Controller) http.Handler {
 		stat := api.Group("stat")
 		{
 			stat.GET("/all", c.allStat)
-			stat.GET("/:id", c.oneStat)
+			stat.GET("/:route", c.oneStat)
 		}
 	}
 

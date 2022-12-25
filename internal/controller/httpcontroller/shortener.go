@@ -9,17 +9,17 @@ import (
 )
 
 type shortControl struct {
-	usecases *usecase.Usecase
+	usecase usecase.Shortener
 }
 
-func newShortControl(uc *usecase.Usecase) *shortControl {
-	return &shortControl{usecases: uc}
+func newShortControl(uc usecase.Shortener) *shortControl {
+	return &shortControl{usecase: uc}
 }
 
 func (sc *shortControl) redirect(ctx *gin.Context) {
 	route := ctx.Param("route")
 
-	originalURL, err := sc.usecases.Shortener.ParseRoute(route)
+	originalURL, err := sc.usecase.ParseRoute(route)
 
 	if err != nil {
 		newErrorResponse(ctx, http.StatusNotFound, err.Error())
@@ -44,7 +44,7 @@ func (sc *shortControl) short(ctx *gin.Context) {
 		return
 	}
 
-	shortRoute, err := sc.usecases.Shortener.ShortURL(input.OriginalURL, userId.(int))
+	shortRoute, err := sc.usecase.ShortURL(input.OriginalURL, userId.(int))
 
 	if err != nil {
 		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())

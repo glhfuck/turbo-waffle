@@ -29,8 +29,8 @@ type Statistics interface {
 
 func NewController(uc *usecase.Usecase) *Controller {
 	return &Controller{
-		Authorization: newAuthControl(uc),
-		Shortener:     newShortControl(uc),
-		//Statistics:    newStatControl(uc),
+		Authorization: newAuthControl(uc.Authorization),
+		Shortener:     newShortControl(uc.Shortener),
+		Statistics:    newStatControl(uc.Statistics),
 	}
 }

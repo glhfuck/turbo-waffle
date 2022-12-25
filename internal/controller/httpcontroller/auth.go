@@ -9,11 +9,11 @@ import (
 )
 
 type authControl struct {
-	usecases *usecase.Usecase
+	usecase usecase.Authorization
 }
 
-func newAuthControl(uc *usecase.Usecase) *authControl {
-	return &authControl{usecases: uc}
+func newAuthControl(uc usecase.Authorization) *authControl {
+	return &authControl{usecase: uc}
 }
 
 func (ac *authControl) signUp(ctx *gin.Context) {
@@ -26,7 +26,7 @@ func (ac *authControl) signUp(ctx *gin.Context) {
 		return
 	}
 
-	id, err := ac.usecases.Authorization.CreateUser(input)
+	id, err := ac.usecase.CreateUser(input)
 
 	if err != nil {
 		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -53,7 +53,7 @@ func (ac *authControl) signIn(ctx *gin.Context) {
 		return
 	}
 
-	token, err := ac.usecases.Authorization.GenerateToken(input.Username, input.Password)
+	token, err := ac.usecase.GenerateToken(input.Username, input.Password)
 
 	if err != nil {
 		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())

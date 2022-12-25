@@ -18,7 +18,7 @@ type Authorization interface {
 }
 
 type Shortener interface {
-	GetLink(linkId int) (*domain.Link, error)
+	OriginalURL(linkId int) (string, error)
 	SaveLink(link *domain.Link) (*domain.Link, error)
 }
 

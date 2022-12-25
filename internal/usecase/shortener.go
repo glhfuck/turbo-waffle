@@ -2,15 +2,12 @@ package usecase
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/glhfuck/turbo-waffle/internal/domain"
 	"github.com/glhfuck/turbo-waffle/internal/infrastructure/repository"
-)
-
-const (
-// consts
 )
 
 type shortUsecase struct {
@@ -28,13 +25,14 @@ func (su *shortUsecase) ParseRoute(route string) (string, error) {
 		return "", errors.New("can't parse route")
 	}
 
-	link, err := su.repo.GetLink(int(linkId))
+	originalURL, err := su.repo.OriginalURL(int(linkId))
 
 	if err != nil {
+		fmt.Println(err)
 		return "", errors.New("no such route")
 	}
 
-	return link.OriginalURL, nil
+	return originalURL, nil
 }
 
 func (su *shortUsecase) ShortURL(originalURL string, userId int) (string, error) {

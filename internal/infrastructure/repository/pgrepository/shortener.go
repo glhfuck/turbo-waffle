@@ -13,23 +13,39 @@ func NewShortPostgres(db *sqlx.DB) *shortPostgres {
 	return &shortPostgres{db: db}
 }
 
-func (sp *shortPostgres) GetLink(linkId int) (*domain.Link, error) {
-	var link domain.Link
+func (sp *shortPostgres) OriginalURL(linkId int) (string, error) {
+	tx, err := sp.db.Begin()
+	if err != nil {
+		return "", err
+	}
 
-	query := `
-	SELECT owner_id, original_URL, creation_date, update_date, visits_count
+	selectQuery := `
+	SELECT original_URL
 	FROM links
 	WHERE link_id = $1
 	`
 
-	err := sp.db.Get(&link, query, linkId)
-
-	if err != nil {
-		return nil, err
+	var originalURL string
+	row := tx.QueryRow(selectQuery, linkId)
+	if err := row.Scan(&originalURL); err != nil {
+		tx.Rollback()
+		return "", err
 	}
 
-	link.Id = linkId
-	return &link, nil
+	updateQuery := `
+	UPDATE links
+	SET visits_count = visits_count + 1
+	WHERE link_id = $1
+	`
+
+	_, err = tx.Exec(updateQuery, linkId)
+	if err != nil {
+		tx.Rollback()
+		return "", err
+	}
+
+	tx.Commit()
+	return originalURL, nil
 }
 
 func (sp *shortPostgres) SaveLink(link *domain.Link) (*domain.Link, error) {

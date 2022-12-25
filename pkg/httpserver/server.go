@@ -17,10 +17,6 @@ type Server struct {
 	httpServer *http.Server
 }
 
-type HttpConfig struct {
-	Port string
-}
-
 func (s *Server) Run(cfg HttpConfig, handler http.Handler) error {
 	s.httpServer = &http.Server{
 		Addr:         ":" + cfg.Port,
